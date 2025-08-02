@@ -188,6 +188,7 @@ return {
   'neovim/nvim-lspconfig',
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
+    'windwp/nvim-autopairs',
     { 'j-hui/fidget.nvim',    opts = {}, tag = 'legacy' },
     { "mason-org/mason.nvim", opts = {} },
     {
@@ -225,6 +226,10 @@ return {
           vim.lsp.completion.enable(true, client.id, args.buf, {
             autotrigger = true,
           })
+          -- Use enter to accept completions.
+          keymap('<CR>', function()
+            return pumvisible() and '<C-y>' or '<cr>'
+          end, { expr = true, remap = false }, { 'i' })
           keymap('<C-l>', function()
             if vim.snippet.active { direction = 1 } then
               vim.snippet.jump(1)
