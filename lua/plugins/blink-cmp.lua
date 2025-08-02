@@ -52,16 +52,16 @@ return {
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
     keymap = {
-      preset = 'enter',
+      preset = 'default',
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
       ['<C-k>'] = { 'select_prev', 'fallback' },
       ['<C-j>'] = { 'select_next', 'fallback' },
       ['<C-l>'] = { function(cmp)
-        if cmp.is_menu_visible() then
-          return cmp.accept()
-        elseif cmp.snippet_active({ direction = 1 }) then
+        if cmp.snippet_active({ direction = 1 }) then
           return cmp.snippet_forward()
+        elseif cmp.is_menu_visible() then
+          return cmp.accept()
         end
       end, 'fallback' },
       -- ['<C-l>'] = { 'snippet_forward', 'select_and_accept', 'fallback' },

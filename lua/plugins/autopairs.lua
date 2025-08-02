@@ -15,7 +15,7 @@ return {
         javascript = { 'template_string' }, -- don't add pairs in javscript template_string treesitter nodes
         java = false,                       -- don't check treesitter on java
       },
-      map_cr = true,
+      map_cr = false,
     }
   end,
 }
