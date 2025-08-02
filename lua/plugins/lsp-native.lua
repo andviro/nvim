@@ -192,36 +192,13 @@ return {
     { "mason-org/mason.nvim", opts = {} },
     {
       'nvimtools/none-ls.nvim', -- none-ls is an active community fork of null-ls
-      dependencies = {
-        {
-          'L3MON4D3/LuaSnip',
-          version = '2.*',
-          build = (function()
-            -- Build Step is needed for regex support in snippets.
-            -- This step is not supported in many windows environments.
-            -- Remove the below condition to re-enable on windows.
-            if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-              return
-            end
-            return 'make install_jsregexp'
-          end)(),
-          dependencies = {
-            {
-              'rafamadriz/friendly-snippets',
-              config = function()
-                require('luasnip.loaders.from_vscode').lazy_load()
-              end,
-            },
-          },
-          opts = {},
-        },
-      },
       opts = function(_, opts)
         local nls = require('null-ls')
         opts.sources = vim.list_extend(opts.sources or {}, {
           nls.builtins.code_actions.gomodifytags,
           nls.builtins.code_actions.impl,
           nls.builtins.formatting.goimports,
+          nls.builtins.completion.nvim_snippets,
         })
         return opts
       end,
@@ -236,6 +213,57 @@ return {
       group = vim.api.nvim_create_augroup('my/lsp', {}),
       callback = function(args)
         local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+        if client:supports_method('textDocument/implementation') then
+          -- Create a keymap for vim.lsp.buf.implementation ...
+        end
+        local chars = {}
+        for i = 32, 126 do
+          table.insert(chars, string.char(i))
+        end
+        if client:supports_method('textDocument/completion') then
+          client.server_capabilities.completionProvider.triggerCharacters = chars
+          vim.lsp.completion.enable(true, client.id, args.buf, {
+            autotrigger = true,
+          })
+          keymap('<C-l>', function()
+            if vim.snippet.active { direction = 1 } then
+              vim.snippet.jump(1)
+            elseif pumvisible() then
+              feedkeys '<C-y>'
+            else
+              feedkeys '<C-l>'
+            end
+          end, {}, { 'i', 's' })
+          keymap('<C-h>', function()
+            if vim.snippet.active { direction = -1 } then
+              vim.snippet.jump(-1)
+            else
+              feedkeys '<C-h>'
+            end
+          end, {}, { 'i', 's' })
+          keymap('<C-j>', function()
+            if pumvisible() then
+              feedkeys '<C-n>'
+            else
+              if next(vim.lsp.get_clients { bufnr = 0 }) then
+                vim.lsp.completion.trigger()
+              else
+                if vim.bo.omnifunc == '' then
+                  feedkeys '<C-x><C-n>'
+                else
+                  feedkeys '<C-x><C-o>'
+                end
+              end
+            end
+          end, 'Trigger/select next completion', 'i')
+          keymap('<C-k>', function()
+            if pumvisible() then
+              feedkeys '<C-p>'
+            else
+              feedkeys '<C-x><C-p>'
+            end
+          end, 'Select prev completion', 'i')
+        end
         -- Auto-format ("lint") on save.
         -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
         if not client:supports_method('textDocument/willSaveWaitUntil')
