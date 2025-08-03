@@ -12,14 +12,15 @@ return {
     'hrsh7th/cmp-calc',
     'lukas-reineke/cmp-rg',
     'hrsh7th/cmp-nvim-lsp-signature-help',
-    'onsails/lspkind.nvim',
+    -- 'onsails/lspkind.nvim',
+    "xzbdmw/colorful-menu.nvim",
   },
-  lazy = false,
+  event = 'InsertEnter *',
   config = function()
     -- Setup nvim-cmp.
     local luasnip = require 'luasnip'
     local cmp = require 'cmp'
-    local lspkind = require 'lspkind'
+    -- local lspkind = require 'lspkind'
     local feedkeys = require 'cmp.utils.feedkeys'
     local keymap = require 'cmp.utils.keymap'
     local has_words_before = function()
@@ -29,21 +30,36 @@ return {
     end
 
     cmp.setup {
+      -- formatting = {
+      --   format = lspkind.cmp_format {
+      --     with_text = false,
+      --     maxwidth = 50,
+      --     mode = 'symbol',
+      --     menu = {
+      --       buffer = 'BUF',
+      --       rg = 'RG',
+      --       nvim_lsp = 'LSP',
+      --       path = 'PATH',
+      --       luasnip = 'SNIP',
+      --       calc = 'CALC',
+      --       spell = 'SPELL',
+      --     },
+      --   },
+      -- },
       formatting = {
-        format = lspkind.cmp_format {
-          with_text = false,
-          maxwidth = 50,
-          mode = 'symbol',
-          menu = {
-            buffer = 'BUF',
-            rg = 'RG',
-            nvim_lsp = 'LSP',
-            path = 'PATH',
-            luasnip = 'SNIP',
-            calc = 'CALC',
-            spell = 'SPELL',
-          },
-        },
+        format = function(entry, vim_item)
+          local highlights_info = require("colorful-menu").cmp_highlights(entry)
+
+          -- highlight_info is nil means we are missing the ts parser, it's
+          -- better to fallback to use default `vim_item.abbr`. What this plugin
+          -- offers is two fields: `vim_item.abbr_hl_group` and `vim_item.abbr`.
+          if highlights_info ~= nil then
+            vim_item.abbr_hl_group = highlights_info.highlights
+            vim_item.abbr = highlights_info.text
+          end
+
+          return vim_item
+        end,
       },
       snippet = {
         expand = function(args)
@@ -88,15 +104,31 @@ return {
           end
         end, { 'i', 's' }),
         ['<Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
+          if luasnip.expand_or_locally_jumpable() then
+            luasnip.expand_or_jump()
+          elseif cmp.visible() then
             local entry = cmp.get_selected_entry()
             if not entry then
               cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
             else
               cmp.confirm()
             end
-          elseif luasnip.expand_or_locally_jumpable() then
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+        ['<C-l>'] = cmp.mapping(function(fallback)
+          if luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
+          elseif cmp.visible() then
+            local entry = cmp.get_selected_entry()
+            if not entry then
+              cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+            else
+              cmp.confirm()
+            end
           elseif has_words_before() then
             cmp.complete()
           else
@@ -104,6 +136,15 @@ return {
           end
         end, { 'i', 's' }),
 
+        ['<C-h>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
         ['<S-Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()

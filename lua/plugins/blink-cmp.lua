@@ -27,6 +27,7 @@ return {
       opts = {},
     },
     'folke/lazydev.nvim',
+    { "xzbdmw/colorful-menu.nvim" },
   },
 
   -- use a release tag to download pre-built binaries
@@ -78,14 +79,29 @@ return {
     -- (Default) Only show the documentation popup when manually triggered
     completion = {
       menu = {
+        -- draw = {
+        --   treesitter = { 'lsp' },
+        --   -- columns = { { "kind_icon" }, { "label", "label_description" }, { "source_id" } },
+        -- },
         draw = {
-          treesitter = { 'lsp' },
-          columns = { { "kind_icon" }, { "label", "label_description" }, { "source_id" } },
+          -- We don't need label_description now because label and label_description are already
+          -- combined together in label by colorful-menu.nvim.
+          columns = { { "kind_icon" }, { "label", gap = 1 } },
+          components = {
+            label = {
+              text = function(ctx)
+                return require("colorful-menu").blink_components_text(ctx)
+              end,
+              highlight = function(ctx)
+                return require("colorful-menu").blink_components_highlight(ctx)
+              end,
+            },
+          },
         },
       },
       documentation = {
         auto_show = true,
-        auto_show_delay_ms = 500,
+        auto_show_delay_ms = 100,
       },
       ghost_text = { enabled = true },
       list = {
@@ -130,7 +146,9 @@ return {
     -- See the fuzzy documentation for more information
     fuzzy = { implementation = 'prefer_rust_with_warning' },
     -- signature = { enabled = true },
-    snippets = { preset = 'luasnip' },
+    snippets = {
+      preset = 'luasnip',
+    },
     cmdline = {
       keymap = {
         preset = 'cmdline',
@@ -143,9 +161,10 @@ return {
       },
     },
     config = function(_, opts)
-      require('blink.cmp').setup(opts)
+      local blink = require('blink.cmp')
+      blink.setup(opts)
       -- Extend neovim's client capabilities with the completion ones.
-      vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities() })
+      vim.lsp.config('*', { capabilities = blink.get_lsp_capabilities() })
     end,
   },
   -- opts_extend = { 'sources.default' },
