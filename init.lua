@@ -17,7 +17,7 @@ require('mappings')
 
 require('lazy').setup({ { import = 'plugins' } }, {
 	install = {
-		colorscheme = { 'solarized8' },
+		colorscheme = { 'retrobox' },
 	},
 	checker = {
 		enabled = true,

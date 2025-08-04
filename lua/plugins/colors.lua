@@ -1,4 +1,50 @@
 return {
+	-- {
+	-- 	"sainnhe/sonokai",
+	-- 	-- config = function()
+	-- 	-- 	vim.cmd 'colorscheme sonokai'
+	-- 	-- end,
+	-- },
+	{
+		"https://gitlab.com/HiPhish/resolarized.nvim",
+		config = function()
+			vim.cmd 'colorscheme selenized-black'
+		end,
+	},
+	-- {
+	-- 	"sainnhe/gruvbox-material",
+	-- 	config = function()
+	-- 		-- vim.cmd 'colorscheme gruvbox-material'
+	-- 	end,
+	-- },
+	-- {
+	-- 	"calind/selenized.nvim",
+	-- 	config = function()
+	-- 		-- vim.cmd 'colorscheme selenized'
+	-- 	end,
+	-- },
+	-- {
+	-- 	'craftzdog/solarized-osaka.nvim',
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		require('solarized-osaka').setup {
+	-- 			style = 'storm',
+	-- 			transparent = false,
+	-- 			styles = {
+	-- 				floats = 'transparent',
+	-- 				sidebars = 'transparent',
+	-- 			},
+	-- 			on_colors = function(colors)
+	-- 				colors.bg = '#001a1d'
+	-- 			end,
+	-- 		}
+	-- 		-- vim.cmd 'colorscheme solarized-osaka'
+	-- 		-- vim.cmd 'hi link LspInlayHint LineNr'
+	-- 		-- vim.cmd 'hi WinBar ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE cterm=bold gui=bold'
+	-- 		-- vim.cmd 'hi WinBarNC ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE cterm=bold gui=bold'
+	-- 	end,
+	-- },
 	--
 	-- 	"https://github.com/lifepillar/vim-solarized8",
 	-- 	branch = 'neovim',
@@ -11,16 +57,30 @@ return {
 	-- 		vim.cmd 'hi link FloatBorder ToolbarLine'
 	-- 	end
 	-- }
-	{
-		'ishan9299/nvim-solarized-lua',
-		priority = 1000,
-		config = function()
-			-- vim.g.solarized_visibility = 'normal'
-			vim.g.solarized_visibility = 'low'
-			vim.cmd 'colorscheme solarized'
-			vim.cmd 'hi link LspInlayHint LineNr'
-			vim.cmd 'hi WinBar ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE cterm=bold gui=bold'
-			vim.cmd 'hi WinBarNC ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE cterm=bold gui=bold'
-		end,
-	},
+	-- {
+	-- 	'ishan9299/nvim-solarized-lua',
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		-- vim.g.solarized_visibility = 'normal'
+	-- 		vim.g.solarized_visibility = 'low'
+	-- 		vim.cmd 'colorscheme solarized'
+	-- 		vim.cmd 'hi link LspInlayHint LineNr'
+	-- 		vim.cmd 'hi WinBar ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE cterm=bold gui=bold'
+	-- 		vim.cmd 'hi WinBarNC ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE cterm=bold gui=bold'
+	-- 	end,
+	-- },
+	-- Or with configuration
+	-- {
+	-- 	'projekt0n/github-nvim-theme',
+	-- 	name = 'github-theme',
+	-- 	lazy = false, -- make sure we load this during startup if it is your main colorscheme
+	-- 	priority = 1000, -- make sure to load this before all the other start plugins
+	-- 	config = function()
+	-- 		require('github-theme').setup({
+	-- 			-- ...
+	-- 		})
+	--
+	-- 		vim.cmd('colorscheme github_dark_default')
+	-- 	end,
+	-- }
 }
