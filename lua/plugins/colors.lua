@@ -1,4 +1,75 @@
 return {
+	-- 'fenetikm/falcon',
+	-- { 'psliwka/termcolors.nvim',  opts = {} },
+	-- {
+	-- 	"tiagovla/tokyodark.nvim",
+	-- 	opts = {
+	-- 		-- custom options here
+	-- 	},
+	-- 	config = function(_, opts)
+	-- 		require("tokyodark").setup(opts) -- calling setup is optional
+	-- 		-- vim.cmd [[colorscheme tokyodark]]
+	-- 	end,
+	-- },
+	-- {
+	-- 	'loganswartz/sunburn.nvim',
+	-- 	dependencies = { 'loganswartz/polychrome.nvim' },
+	-- 	-- you could do this, or use the standard vimscript `colorscheme sunburn`
+	-- 	config = function()
+	-- 		-- vim.cmd.colorscheme 'sunburn'
+	-- 	end,
+	-- },
+	-- -- example lazy.nvim install setup
+	-- {
+	-- 	"slugbyte/lackluster.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	init = function()
+	-- 		-- vim.cmd.colorscheme("lackluster")
+	-- 		-- vim.cmd.colorscheme("lackluster-hack") -- my favorite
+	-- 		-- vim.cmd.colorscheme("lackluster-mint")
+	-- 	end,
+	-- },
+	-- {
+	-- 	"samharju/serene.nvim",
+	-- 	-- for using as main:
+	-- 	config = function()
+	-- 		-- vim.cmd.colorscheme("serene")
+	-- 	end,
+	-- },
+	-- {
+	-- 	"killitar/obscure.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	-- config = function() vim.cmd.colorscheme("obscure") end,
+	-- },
+	-- {
+	-- 	"neanias/everforest-nvim",
+	-- 	version = false,
+	-- 	lazy = false,
+	-- 	priority = 1000, -- make sure to load this before all the other start plugins
+	-- 	-- Optional; default configuration will be used if setup isn't called.
+	-- 	config = function()
+	-- 		require("everforest").setup({
+	-- 			background = "hard",
+	-- 		})
+	-- 	end,
+	-- },
+	-- { "adisen99/apprentice.nvim", dependencies = { "rktjmp/lush.nvim" } },
+	-- -- {
+	-- -- 	'kdheepak/monochrome.nvim',
+	-- -- 	config = function()
+	-- -- 		-- vim.cmd 'colorscheme monochrome'
+	-- -- 	end
+	-- -- },
+	-- {
+	-- 	"kyazdani42/blue-moon",
+	-- 	config = function()
+	-- 		vim.opt.termguicolors = true
+	-- 		-- vim.cmd "colorscheme blue-moon"
+	-- 	end
+	-- },
+	-- { 'keiyakeiya/PapilioDehaanii.vim', },
 	-- {
 	-- 	"sainnhe/sonokai",
 	-- 	-- config = function()
@@ -8,9 +79,100 @@ return {
 	{
 		"https://gitlab.com/HiPhish/resolarized.nvim",
 		config = function()
-			vim.cmd 'colorscheme selenized-black'
+			local resolarized  = require 'resolarized'
+			-- References to the palette and scheme
+			local palette      = resolarized.palette.solarized.dark
+			local scheme       = resolarized.scheme.solarized
+			-- Change red to be fully red
+			palette.base03.gui = 0x001e27
+			-- Apply your changes
+			resolarized.apply('solarized-dark', palette, scheme)
+			vim.cmd 'colorscheme solarized-dark'
 		end,
 	},
+	-- {
+	-- 	"phha/zenburn.nvim",
+	-- config = function() require("zenburn").setup() end,
+	-- },
+	{
+		"vague2k/vague.nvim",
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- make sure to load this before all the other plugins
+		config = function()
+			-- NOTE: you do not need to call setup if you don't want to.
+			require("vague").setup({
+				-- optional configuration here
+			})
+			-- vim.cmd("colorscheme vague")
+		end
+	},
+	-- {
+	-- 	'mcchrish/zenbones.nvim',
+	-- 	-- Optionally install Lush. Allows for more configuration or extending the colorscheme
+	-- 	-- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+	-- 	-- In Vim, compat mode is turned on as Lush only works in Neovim.
+	-- 	dependencies = {
+	-- 		'rktjmp/lush.nvim',
+	-- 	},
+	-- 	config = function()
+	-- 		vim.g.zenbones = { darkness = 'default' }
+	-- 		-- vim.cmd 'colorscheme rosebones'
+	-- 		-- vim.cmd 'colorscheme zenbones'
+	-- 		-- vim.cmd 'colorscheme zenwritten'
+	-- 	end,
+	-- },
+	-- {
+	-- 	'dgox16/oldworld.nvim',
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	opts = {},
+	-- 	config = function()
+	-- 		-- vim.cmd 'colorscheme oldworld'
+	-- 	end,
+	-- },
+	-- {
+	-- 	'pappasam/papercolor-theme-slim',
+	-- 	config = function()
+	-- 		-- vim.cmd 'colorscheme PaperColorSlim'
+	-- 	end,
+	-- },
+	-- {
+	-- 	'ramojus/mellifluous.nvim',
+	-- 	-- version = "v0.*", -- uncomment for stable config (some features might be missed if/when v1 comes out)
+	-- 	config = function()
+	-- 		require('mellifluous').setup {
+	-- 			colorset = 'kanagawa_dragon',
+	-- 		} -- optional, see configuration section.
+	-- 		-- vim.cmd 'colorscheme mellifluous'
+	-- 	end,
+	-- },
+	-- { 'kepano/flexoki-neovim', name = 'flexoki' },
+	-- {
+	-- 	'0xstepit/flow.nvim',
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	opts = {},
+	-- 	config = function()
+	-- 		require('flow').setup {
+	-- 			dark_theme = true, -- Set the theme with dark background.
+	-- 			high_contrast = false, -- Make the dark background darker or the light background lighter.
+	-- 			transparent = false, -- Set transparent background.
+	-- 			fluo_color = 'pink', -- Color used as fluo. Available values are pink, yellow, orange, or green.
+	-- 			mode = 'desaturate', -- Mode of the colors. Available values are: dark, bright, desaturate, or base.
+	-- 			aggressive_spell = false, -- Use colors for spell check.
+	-- 		}
+	-- 		-- vim.cmd 'colorscheme flow'
+	-- 	end,
+	-- },
+	-- {
+	-- 	'sho-87/kanagawa-paper.nvim',
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	opts = {},
+	-- 	config = function()
+	-- 		-- vim.cmd 'colorscheme kanagawa-paper'
+	-- 	end,
+	-- },
 	-- {
 	-- 	"sainnhe/gruvbox-material",
 	-- 	config = function()
@@ -61,7 +223,6 @@ return {
 	-- 	'ishan9299/nvim-solarized-lua',
 	-- 	priority = 1000,
 	-- 	config = function()
-	-- 		-- vim.g.solarized_visibility = 'normal'
 	-- 		vim.g.solarized_visibility = 'low'
 	-- 		vim.cmd 'colorscheme solarized'
 	-- 		vim.cmd 'hi link LspInlayHint LineNr'
