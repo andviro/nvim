@@ -217,11 +217,15 @@ return {
         if client:supports_method('textDocument/implementation') then
           -- Create a keymap for vim.lsp.buf.implementation ...
         end
-        local chars = {}
-        for i = 32, 126 do
-          table.insert(chars, string.char(i))
-        end
         if client:supports_method('textDocument/completion') then
+          local chars = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+            "T", "U", "V", "W", "X", "Y", "Z",
+            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+            "w", "x",
+            "y", "z" }
+          for _, v in ipairs(vim.lsp.get_clients()[1].server_capabilities.completionProvider.triggerCharacters) do
+            table.insert(chars, v)
+          end
           client.server_capabilities.completionProvider.triggerCharacters = chars
           vim.lsp.completion.enable(true, client.id, args.buf, {
             autotrigger = true,
@@ -229,7 +233,25 @@ return {
           -- Use enter to accept completions.
           keymap('<CR>', function()
             return pumvisible() and '<C-y>' or '<cr>'
-          end, { expr = true, remap = false }, { 'i' })
+          end, {}, { 'i' })
+          keymap('<Tab>', function()
+            if pumvisible() then
+              feedkeys '<C-n>'
+            elseif vim.snippet.active { direction = 1 } then
+              vim.snippet.jump(1)
+            else
+              feedkeys '<Tab>'
+            end
+          end, {}, { 'i', 's' })
+          keymap('<S-Tab>', function()
+            if pumvisible() then
+              feedkeys '<C-p>'
+            elseif vim.snippet.active { direction = -1 } then
+              vim.snippet.jump(-1)
+            else
+              feedkeys '<S-Tab>'
+            end
+          end, {}, { 'i', 's' })
           keymap('<C-l>', function()
             if vim.snippet.active { direction = 1 } then
               vim.snippet.jump(1)

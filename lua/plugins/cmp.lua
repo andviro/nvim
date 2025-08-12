@@ -3,7 +3,28 @@ return {
   'hrsh7th/nvim-cmp',
   dependencies = {
     'hrsh7th/cmp-nvim-lsp',
-    'L3MON4D3/LuaSnip',
+    {
+      'L3MON4D3/LuaSnip',
+      version = '2.*',
+      build = (function()
+        -- Build Step is needed for regex support in snippets.
+        -- This step is not supported in many windows environments.
+        -- Remove the below condition to re-enable on windows.
+        if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+          return
+        end
+        return 'make install_jsregexp'
+      end)(),
+      dependencies = {
+        {
+          'rafamadriz/friendly-snippets',
+          config = function()
+            require('luasnip.loaders.from_vscode').lazy_load()
+          end,
+        },
+      },
+      opts = {},
+    },
     'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
@@ -13,7 +34,7 @@ return {
     'lukas-reineke/cmp-rg',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     -- 'onsails/lspkind.nvim',
-    "xzbdmw/colorful-menu.nvim",
+    { "xzbdmw/colorful-menu.nvim", opts = {} },
   },
   event = 'InsertEnter *',
   config = function()
@@ -30,22 +51,6 @@ return {
     end
 
     cmp.setup {
-      -- formatting = {
-      --   format = lspkind.cmp_format {
-      --     with_text = false,
-      --     maxwidth = 50,
-      --     mode = 'symbol',
-      --     menu = {
-      --       buffer = 'BUF',
-      --       rg = 'RG',
-      --       nvim_lsp = 'LSP',
-      --       path = 'PATH',
-      --       luasnip = 'SNIP',
-      --       calc = 'CALC',
-      --       spell = 'SPELL',
-      --     },
-      --   },
-      -- },
       formatting = {
         format = function(entry, vim_item)
           local highlights_info = require("colorful-menu").cmp_highlights(entry)
@@ -65,6 +70,10 @@ return {
         expand = function(args)
           luasnip.lsp_expand(args.body)
         end,
+      },
+      window = {
+        -- completion = cmp.config.window.bordered(),
+        -- documentation = cmp.config.window.bordered(),
       },
       mapping = {
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -239,5 +248,7 @@ return {
         { name = 'cmdline' },
       }),
     })
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+    vim.lsp.config('*', { capabilities = capabilities })
   end,
 }
