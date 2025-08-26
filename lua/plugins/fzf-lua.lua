@@ -20,9 +20,10 @@ return {
   -- or if using mini.icons/mini.nvim
   -- dependencies = { "echasnovski/mini.icons" },
   opts = {
+    -- 'borderless',
     'ivy',
-    'fzf-native',
-    fzf_colors = true,
+    -- 'telescope',
+    -- fzf_colors = true,
     files = {
       prompt = "Files> ",
       file_ignore_patterns = {
@@ -66,8 +67,23 @@ return {
       '<Leader>a',
       function()
         require('fzf-lua').lsp_code_actions { silent = true }
+        -- vim.lsp.buf.code_action()
       end,
       desc = 'Code [A]ctions',
+    },
+    {
+      '<Leader><C-p>',
+      function()
+        require('fzf-lua').lsp_finder {}
+      end,
+      desc = 'LSP References',
+    },
+    {
+      '<Leader><Space>',
+      function()
+        require('fzf-lua').lsp_implementations { silent = true }
+      end,
+      desc = 'LSP References',
     },
     { '<leader>gb', ':FzfLua git_branches<CR>', desc = 'Neogit [b]ranches' },
   },

@@ -2,32 +2,9 @@ return {
   'saghen/blink.cmp',
   -- optional: provides snippets for the snippet source
   dependencies = {
-    -- { 'samiulsami/cmp-go-deep', dependencies = { 'kkharji/sqlite.lua' } },
-    'saghen/blink.compat',
-    {
-      'L3MON4D3/LuaSnip',
-      version = '2.*',
-      build = (function()
-        -- Build Step is needed for regex support in snippets.
-        -- This step is not supported in many windows environments.
-        -- Remove the below condition to re-enable on windows.
-        if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-          return
-        end
-        return 'make install_jsregexp'
-      end)(),
-      dependencies = {
-        {
-          'rafamadriz/friendly-snippets',
-          config = function()
-            require('luasnip.loaders.from_vscode').lazy_load()
-          end,
-        },
-      },
-      opts = {},
-    },
     'folke/lazydev.nvim',
-    { "xzbdmw/colorful-menu.nvim" },
+    'rafamadriz/friendly-snippets',
+    "xzbdmw/colorful-menu.nvim",
   },
 
   -- use a release tag to download pre-built binaries
@@ -53,7 +30,7 @@ return {
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
     keymap = {
-      preset = 'default',
+      preset = 'enter',
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
       ['<C-k>'] = { 'select_prev', 'fallback' },
@@ -62,7 +39,7 @@ return {
         if cmp.snippet_active({ direction = 1 }) then
           return cmp.snippet_forward()
         elseif cmp.is_menu_visible() then
-          return cmp.accept()
+          return cmp.select_and_accept()
         end
       end, 'fallback' },
       -- ['<C-l>'] = { 'snippet_forward', 'select_and_accept', 'fallback' },
@@ -124,21 +101,7 @@ return {
           end,
         },
       },
-      -- providers = {
-      --   go_deep = {
-      --     name = 'go_deep',
-      --     module = 'blink.compat.source',
-      --     min_keyword_length = 3,
-      --     max_items = 5,
-      --     ---@module "cmp_go_deep"
-      --     ---@type cmp_go_deep.Options
-      --     opts = {
-      --       -- See below for configuration options
-      --     },
-      --   },
-      -- },
     },
-
     -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
     -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
     -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
@@ -147,7 +110,7 @@ return {
     fuzzy = { implementation = 'prefer_rust_with_warning' },
     -- signature = { enabled = true },
     snippets = {
-      preset = 'luasnip',
+      --   preset = 'luasnip',
     },
     cmdline = {
       keymap = {
