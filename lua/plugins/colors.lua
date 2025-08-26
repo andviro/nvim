@@ -270,12 +270,12 @@ return {
 	{
 		"https://gitlab.com/HiPhish/resolarized.nvim",
 		config = function()
-			-- local resolarized  = require 'resolarized'
-			-- local palette      = resolarized.palette.solarized.dark
-			-- local scheme       = resolarized.scheme.solarized
-			-- palette.base03.gui = 0x001e27
-			-- resolarized.apply('solarized-dark', palette, scheme)
-			-- vim.cmd 'colorscheme solarized-dark'
+			local resolarized  = require 'resolarized'
+			local palette      = resolarized.palette.solarized.dark
+			local scheme       = resolarized.scheme.solarized
+			palette.base03.gui = 0x001e27
+			resolarized.apply('solarized-dark', palette, scheme)
+			vim.cmd 'colorscheme solarized-dark'
 			-- vim.cmd 'colorscheme selenized-black'
 		end,
 	},

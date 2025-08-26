@@ -2,7 +2,6 @@ return {
   'saghen/blink.cmp',
   -- optional: provides snippets for the snippet source
   dependencies = {
-    'folke/lazydev.nvim',
     'rafamadriz/friendly-snippets',
     "xzbdmw/colorful-menu.nvim",
   },
@@ -44,7 +43,7 @@ return {
       end, 'fallback' },
       -- ['<C-l>'] = { 'snippet_forward', 'select_and_accept', 'fallback' },
       ['<C-h>'] = { 'snippet_backward', 'fallback' },
-      ['<CR>'] = { 'accept', 'fallback' },
+      ['<CR>'] = { 'select_and_accept', 'fallback' },
     },
 
     appearance = {
@@ -80,7 +79,7 @@ return {
         auto_show = true,
         auto_show_delay_ms = 100,
       },
-      ghost_text = { enabled = true },
+      -- ghost_text = { enabled = true },
       list = {
         selection = {
           preselect = true,
@@ -91,9 +90,8 @@ return {
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev' },
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
       providers = {
-        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         cmdline = {
           -- ignores cmdline completions when executing shell commands
           enabled = function()

@@ -232,8 +232,12 @@ return {
           })
           -- Use enter to accept completions.
           keymap('<CR>', function()
-            return pumvisible() and '<C-y>' or '<cr>'
-          end, {}, { 'i' })
+            if pumvisible() then
+              feedkeys '<C-y>'
+            else
+              feedkeys '<CR>'
+            end
+          end, {}, { 'i', 's' })
           keymap('<Tab>', function()
             if pumvisible() then
               feedkeys '<C-n>'

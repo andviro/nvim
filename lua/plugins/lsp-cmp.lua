@@ -69,12 +69,17 @@ local lsp_configs = {
   html = {},
   lua_ls = {
     Lua = {
-      workspace = { checkThirdParty = false },
       telemetry = { enable = false },
-      -- diagnostics = {
-      -- 	-- Get the language server to recognize the `vim` global
-      -- 	globals = { "vim" },
-      -- },
+      diagnostics = {
+        globals = {
+          'vim',
+          'require'
+        },
+      },
+      workspace = {
+        checkThirdParty = false,
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
     },
   },
   taplo = {
