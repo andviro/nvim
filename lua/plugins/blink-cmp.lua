@@ -90,13 +90,28 @@ return {
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      -- default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = function(ctx)
+        local success, node = pcall(vim.treesitter.get_node)
+        if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
+          return { 'buffer' }
+        elseif vim.bo.filetype == 'lua' then
+          return { 'lsp', 'path' }
+        else
+          return { 'lsp', 'path', 'snippets', 'buffer' }
+        end
+      end,
       providers = {
         cmdline = {
           -- ignores cmdline completions when executing shell commands
           enabled = function()
             return vim.fn.getcmdtype() ~= ':' or not vim.fn.getcmdline():match "^[%%0-9,'<>%-]*!"
           end,
+        },
+        snippets = {
+          should_show_items = function(ctx)
+            return ctx.trigger.initial_kind ~= 'trigger_character'
+          end
         },
       },
     },
