@@ -1,6 +1,7 @@
 local o = vim.opt
 local wo = vim.wo
 local fn = vim.fn
+local api = vim.api
 
 vim.g.mapleader = ';'
 vim.g.maplocalleader = ';'
@@ -122,3 +123,16 @@ vim.opt.switchbuf = 'usetab'
 -- vim.g.VM_maps['Skip Region'] = '<C-x>'
 -- vim.g.VM_maps['Increase'] = '+'
 -- vim.g.VM_maps['Decrease'] = '-'
+--
+-- go to last loc when opening a buffer
+api.nvim_create_autocmd('BufReadPost',
+  { command = [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]] })
+
+local highlight_group = api.nvim_create_augroup('YankHighlight', { clear = true })
+api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
+})

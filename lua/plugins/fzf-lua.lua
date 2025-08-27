@@ -39,7 +39,10 @@ return {
         'mock/',
         'fakes/',
       },
-    }
+    },
+    -- awesome_colorschemes = {
+    --   packpath = '/home/andrew/.config/nvim',
+    -- },
   },
   keys = {
     {
