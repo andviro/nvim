@@ -166,14 +166,14 @@ return {
   --     -- vim.cmd [[colorscheme tokyodark]]
   --   end,
   -- },
-  -- {
-  --   'loganswartz/sunburn.nvim',
-  --   dependencies = { 'loganswartz/polychrome.nvim' },
-  --   -- you could do this, or use the standard vimscript `colorscheme sunburn`
-  --   config = function()
-  --     vim.cmd.colorscheme 'sunburn'
-  --   end,
-  -- },
+  {
+    'loganswartz/sunburn.nvim',
+    dependencies = { 'loganswartz/polychrome.nvim' },
+    -- you could do this, or use the standard vimscript `colorscheme sunburn`
+    config = function()
+      -- vim.cmd.colorscheme 'sunburn'
+    end,
+  },
   -- {
   --   'everviolet/nvim',
   --   name = 'evergarden',
@@ -276,18 +276,18 @@ return {
   -- -- 	-- end,
   -- -- },
   -- { "savq/melange-nvim" },
-  -- {
-  --   "https://gitlab.com/HiPhish/resolarized.nvim",
-  --   config = function()
-  --     -- local resolarized  = require 'resolarized'
-  --     -- local palette      = resolarized.palette.solarized.dark
-  --     -- local scheme       = resolarized.scheme.solarized
-  --     -- palette.base03.gui = 0x001e27
-  --     -- resolarized.apply('solarized-dark', palette, scheme)
-  --     -- vim.cmd 'colorscheme solarized-dark'
-  --     -- vim.cmd 'colorscheme selenized-black'
-  --   end,
-  -- },
+  {
+    "https://gitlab.com/HiPhish/resolarized.nvim",
+    config = function()
+      -- local resolarized  = require 'resolarized'
+      -- local palette      = resolarized.palette.solarized.dark
+      -- local scheme       = resolarized.scheme.solarized
+      -- palette.base03.gui = 0x001e27
+      -- resolarized.apply('solarized-dark', palette, scheme)
+      -- vim.cmd 'colorscheme solarized-dark'
+      -- vim.cmd 'colorscheme selenized-black'
+    end,
+  },
   -- -- {
   -- -- 	'EdenEast/nightfox.nvim',
   -- -- 	config = function()
