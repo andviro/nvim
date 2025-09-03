@@ -49,18 +49,16 @@ local lsp_configs = {
   },
   -- pyright = {},
   pylsp = {
-    settings = {
-      pylsp = {
-        plugins = {
-          pyflakes = { enabled = false },
-          pycodestyle = { enabled = false },
-          autopep8 = { enabled = false },
-          yapf = { enabled = false },
-          mccabe = { enabled = false },
-          pylsp_mypy = { enabled = false },
-          pylsp_black = { enabled = false },
-          pylsp_isort = { enabled = false },
-        },
+    pylsp = {
+      plugins = {
+        pyflakes = { enabled = false },
+        pycodestyle = { enabled = false },
+        autopep8 = { enabled = false },
+        yapf = { enabled = false },
+        mccabe = { enabled = true },
+        pylsp_mypy = { enabled = false },
+        pylsp_black = { enabled = false },
+        pylsp_isort = { enabled = false },
       },
     },
   },
@@ -203,6 +201,9 @@ return {
           nls.builtins.code_actions.gomodifytags,
           nls.builtins.code_actions.impl,
           nls.builtins.formatting.goimports,
+          -- nls.builtins.diagnostics.flake8.with({ extra_args = { "--ignore=E501", "--max-line-length", "1024" } }),
+          require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
+          require 'none-ls.formatting.ruff_format',
         })
         return opts
       end,
@@ -225,7 +226,7 @@ return {
             group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
             buffer = args.buf,
             callback = function()
-              vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+              vim.lsp.buf.format({ bufnr = args.buf, id = client.id, async = false })
             end,
           })
         end

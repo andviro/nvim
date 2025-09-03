@@ -1,41 +1,41 @@
-vim.cmd [[ colorscheme habamax ]]
+-- vim.cmd [[ colorscheme habamax ]]
 return {
-  -- {
-  --   "wtfox/jellybeans.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   opts = {}, -- Optional
-  --   config = function()
-  --     -- vim.cmd 'colorscheme jellybeans-mono'
-  --   end,
-  -- },
-  -- {
-  --   "yorik1984/newpaper.nvim",
-  --   priority = 1000,
-  --   config = true,
-  --   config = function()
-  --     -- require("newpaper").setup({
-  --     -- 	style = "dark"
-  --     -- })
-  --     -- vim.cmd.colorscheme "newpaper"
-  --   end
-  -- },
-  -- { 'psliwka/termcolors.nvim', opts = {} },
+  {
+    "wtfox/jellybeans.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {}, -- Optional
+    config = function()
+      -- vim.cmd 'colorscheme jellybeans-mono'
+    end,
+  },
+  {
+    "yorik1984/newpaper.nvim",
+    priority = 1000,
+    config = true,
+    config = function()
+      -- require("newpaper").setup({
+      -- 	style = "dark"
+      -- })
+      -- vim.cmd.colorscheme "newpaper"
+    end
+  },
+  { 'psliwka/termcolors.nvim',        opts = {} },
   -- -- Or with configuration
-  -- 'mhartington/oceanic-next',
-  -- {
-  --   'ray-x/aurora',
-  --   init = function()
-  --     vim.g.aurora_italic = 1
-  --     vim.g.aurora_transparent = 1
-  --     vim.g.aurora_bold = 1
-  --   end,
-  --   config = function()
-  --     -- vim.cmd.colorscheme "aurora"
-  --     -- override defaults
-  --     -- vim.api.nvim_set_hl(0, '@number', { fg = '#e933e3' })
-  --   end
-  -- },
+  'mhartington/oceanic-next',
+  {
+    'ray-x/aurora',
+    init = function()
+      vim.g.aurora_italic = 1
+      vim.g.aurora_transparent = 1
+      vim.g.aurora_bold = 1
+    end,
+    config = function()
+      -- vim.cmd.colorscheme "aurora"
+      -- override defaults
+      -- vim.api.nvim_set_hl(0, '@number', { fg = '#e933e3' })
+    end
+  },
   -- {
   --   'embark-theme/vim',
   --   name = 'embark',
@@ -43,54 +43,53 @@ return {
   --     -- vim.cmd('colorscheme embark')
   --   end
   -- },
-  -- {
-  --   'NTBBloodbath/doom-one.nvim',
-  --   config = function()
-  --     -- Add color to cursor
-  --     vim.g.doom_one_cursor_coloring = false
-  --     -- Set :terminal colors
-  --     vim.g.doom_one_terminal_colors = true
-  --     -- Enable italic comments
-  --     vim.g.doom_one_italic_comments = false
-  --     -- Enable TS support
-  --     vim.g.doom_one_enable_treesitter = true
-  --     -- Color whole diagnostic text or only underline
-  --     vim.g.doom_one_diagnostics_text_color = false
-  --     -- Enable transparent background
-  --     vim.g.doom_one_transparent_background = false
-  --
-  --     -- Pumblend transparency
-  --     vim.g.doom_one_pumblend_enable = true
-  --     vim.g.doom_one_pumblend_transparency = 20
-  --
-  --     -- Plugins integration
-  --     vim.g.doom_one_plugin_neorg = true
-  --     vim.g.doom_one_plugin_barbar = false
-  --     vim.g.doom_one_plugin_telescope = false
-  --     vim.g.doom_one_plugin_neogit = true
-  --     vim.g.doom_one_plugin_nvim_tree = true
-  --     vim.g.doom_one_plugin_dashboard = true
-  --     vim.g.doom_one_plugin_startify = true
-  --     vim.g.doom_one_plugin_whichkey = true
-  --     vim.g.doom_one_plugin_indent_blankline = true
-  --     vim.g.doom_one_plugin_vim_illuminate = true
-  --     vim.g.doom_one_plugin_lspsaga = false
-  --     -- vim.cmd('colorscheme doom-one')
-  --   end
-  -- },
-  -- {
-  --   'projekt0n/github-nvim-theme',
-  --   name = 'github-theme',
-  --   lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-  --   priority = 1000, -- make sure to load this before all the other start plugins
-  --   config = function()
-  --     require('github-theme').setup({
-  --       -- ...
-  --     })
-  --
-  --     -- vim.cmd('colorscheme github_dark_dimmed')
-  --   end,
-  -- },
+  {
+    'NTBBloodbath/doom-one.nvim',
+    config = function()
+      -- Add color to cursor
+      vim.g.doom_one_cursor_coloring = false
+      -- Set :terminal colors
+      vim.g.doom_one_terminal_colors = true
+      -- Enable italic comments
+      vim.g.doom_one_italic_comments = false
+      -- Enable TS support
+      vim.g.doom_one_enable_treesitter = true
+      -- Color whole diagnostic text or only underline
+      vim.g.doom_one_diagnostics_text_color = false
+      -- Enable transparent background
+      vim.g.doom_one_transparent_background = false
+
+      -- Pumblend transparency
+      vim.g.doom_one_pumblend_enable = true
+      vim.g.doom_one_pumblend_transparency = 20
+
+      -- Plugins integration
+      vim.g.doom_one_plugin_neorg = true
+      vim.g.doom_one_plugin_barbar = false
+      vim.g.doom_one_plugin_telescope = false
+      vim.g.doom_one_plugin_neogit = true
+      vim.g.doom_one_plugin_nvim_tree = true
+      vim.g.doom_one_plugin_dashboard = true
+      vim.g.doom_one_plugin_startify = true
+      vim.g.doom_one_plugin_whichkey = true
+      vim.g.doom_one_plugin_indent_blankline = true
+      vim.g.doom_one_plugin_vim_illuminate = true
+      vim.g.doom_one_plugin_lspsaga = false
+      -- vim.cmd('colorscheme doom-one')
+    end
+  },
+  {
+    'projekt0n/github-nvim-theme',
+    name = 'github-theme',
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      require('github-theme').setup({
+        -- ...
+      })
+      -- vim.cmd('colorscheme github_dark_dimmed')
+    end,
+  },
   -- {
   --   'rose-pine/neovim',
   --   name = 'rose-pine',
@@ -98,19 +97,19 @@ return {
   --     -- vim.cmd 'colorscheme rose-pine'
   --   end,
   -- },
-  -- -- {
-  -- -- 	"ficcdaf/ashen.nvim",
-  -- -- 	-- optional but recommended,
-  -- -- 	-- pin to the latest stable release:
-  -- -- 	-- tag = "*",
-  -- -- 	lazy = false,
-  -- -- 	priority = 1000,
-  -- -- 	-- configuration is optional!
-  -- -- 	opts = {
-  -- -- 		-- your settings here
-  -- -- 	},
-  -- -- },
-  -- -- 'fenetikm/falcon',
+  {
+    "ficcdaf/ashen.nvim",
+    -- optional but recommended,
+    -- pin to the latest stable release:
+    -- tag = "*",
+    lazy = false,
+    priority = 1000,
+    -- configuration is optional!
+    opts = {
+      -- your settings here
+    },
+  },
+  'fenetikm/falcon',
   -- { "hardselius/warlock" },
   -- -- { "pgdouyon/vim-yin-yang" },
   -- -- "axvr/photon.vim",
@@ -135,13 +134,13 @@ return {
   -- -- 	lazy = false,
   -- -- 	priority = 1000
   -- -- },
-  -- {
-  --   'sainnhe/sonokai',
-  --   config = function()
-  --     vim.g.sonokai_style = 'andromeda'
-  --     -- vim.cmd [[colorscheme sonokai]]
-  --   end
-  -- },
+  {
+    'sainnhe/sonokai',
+    config = function()
+      vim.g.sonokai_style = 'andromeda'
+      -- vim.cmd [[colorscheme sonokai]]
+    end
+  },
   -- {
   --   'kaiuri/nvim-juliana',
   --   lazy = false,
@@ -156,50 +155,50 @@ return {
   -- -- 		-- require('nordic').load()
   -- -- 	end
   -- -- },
-  -- {
-  --   "tiagovla/tokyodark.nvim",
-  --   opts = {
-  --     -- custom options here
-  --   },
-  --   config = function(_, opts)
-  --     -- require("tokyodark").setup(opts) -- calling setup is optional
-  --     -- vim.cmd [[colorscheme tokyodark]]
-  --   end,
-  -- },
+  {
+    "tiagovla/tokyodark.nvim",
+    opts = {
+      -- custom options here
+    },
+    config = function(_, opts)
+      -- require("tokyodark").setup(opts) -- calling setup is optional
+      -- vim.cmd [[colorscheme tokyodark]]
+    end,
+  },
   {
     'loganswartz/sunburn.nvim',
     dependencies = { 'loganswartz/polychrome.nvim' },
     -- you could do this, or use the standard vimscript `colorscheme sunburn`
     config = function()
-      -- vim.cmd.colorscheme 'sunburn'
+      vim.cmd.colorscheme 'sunburn'
     end,
   },
-  -- {
-  --   'everviolet/nvim',
-  --   name = 'evergarden',
-  --   priority = 1000, -- Colorscheme plugin is loaded first before any other plugins
-  --   init = function()
-  --     local opts = {
-  --       theme = {
-  --         variant = 'winter', -- 'winter'|'fall'|'spring'|'summer'
-  --         accent = 'green',
-  --       },
-  --       -- editor = {
-  --       -- 	transparent_background = false,
-  --       -- 	sign = { color = 'none' },
-  --       -- 	float = {
-  --       -- 		color = 'mantle',
-  --       -- 		solid_border = false,
-  --       -- 	},
-  --       -- 	completion = {
-  --       -- 		color = 'surface0',
-  --       -- 	},
-  --       -- },
-  --     }
-  --     require("evergarden").setup(opts)
-  --     -- vim.cmd.colorscheme("evergarden")
-  --   end,
-  -- },
+  {
+    'everviolet/nvim',
+    name = 'evergarden',
+    priority = 1000, -- Colorscheme plugin is loaded first before any other plugins
+    init = function()
+      local opts = {
+        theme = {
+          variant = 'winter', -- 'winter'|'fall'|'spring'|'summer'
+          accent = 'green',
+        },
+        -- editor = {
+        -- 	transparent_background = false,
+        -- 	sign = { color = 'none' },
+        -- 	float = {
+        -- 		color = 'mantle',
+        -- 		solid_border = false,
+        -- 	},
+        -- 	completion = {
+        -- 		color = 'surface0',
+        -- 	},
+        -- },
+      }
+      require("evergarden").setup(opts)
+      -- vim.cmd.colorscheme("evergarden")
+    end,
+  },
   -- {
   --   "slugbyte/lackluster.nvim",
   --   lazy = false,
@@ -225,27 +224,26 @@ return {
   --     -- vim.cmd.colorscheme("obscure")
   --   end,
   -- },
-  -- -- Lazy
-  -- -- {
-  -- -- 	"olimorris/onedarkpro.nvim",
-  -- -- 	priority = 1000, -- Ensure it loads first
-  -- -- 	config = function()
-  -- -- 		-- vim.cmd("colorscheme onedark")
-  -- -- 	end,
-  -- -- },
-  -- {
-  --   "neanias/everforest-nvim",
-  --   version = false,
-  --   lazy = false,
-  --   priority = 1000, -- make sure to load this before all the other start plugins
-  --   -- Optional; default configuration will be used if setup isn't called.
-  --   config = function()
-  --     require("everforest").setup({
-  --       background = "hard",
-  --     })
-  --     -- vim.cmd 'colorscheme everforest'
-  --   end
-  -- },
+  {
+    "olimorris/onedarkpro.nvim",
+    priority = 1000, -- Ensure it loads first
+    config = function()
+      -- vim.cmd("colorscheme onedark")
+    end,
+  },
+  {
+    "neanias/everforest-nvim",
+    version = false,
+    lazy = false,
+    priority = 1000, -- make sure to load this before all the other start plugins
+    -- Optional; default configuration will be used if setup isn't called.
+    config = function()
+      require("everforest").setup({
+        background = "hard",
+      })
+      -- vim.cmd 'colorscheme everforest'
+    end
+  },
   -- -- {
   -- -- 	"binbandit/achroma.nvim",
   -- -- 	lazy = false,
@@ -268,14 +266,8 @@ return {
   --     -- vim.cmd "colorscheme blue-moon"
   --   end
   -- },
-  -- -- { 'keiyakeiya/PapilioDehaanii.vim', },
-  -- -- {
-  -- -- 	"sainnhe/sonokai",
-  -- -- 	-- config = function()
-  -- -- 	-- 	vim.cmd 'colorscheme sonokai'
-  -- -- 	-- end,
-  -- -- },
-  -- { "savq/melange-nvim" },
+  { 'keiyakeiya/PapilioDehaanii.vim', },
+  { "savq/melange-nvim" },
   {
     "https://gitlab.com/HiPhish/resolarized.nvim",
     config = function()
@@ -288,31 +280,31 @@ return {
       -- vim.cmd 'colorscheme selenized-black'
     end,
   },
-  -- -- {
-  -- -- 	'EdenEast/nightfox.nvim',
-  -- -- 	config = function()
-  -- -- 		-- vim.cmd 'colorscheme nightfox'
-  -- -- 	end,
-  -- -- },
-  -- -- {
+  {
+    'EdenEast/nightfox.nvim',
+    config = function()
+      -- vim.cmd 'colorscheme nightfox'
+    end,
+  },
+  -- {
   -- -- 	"phha/zenburn.nvim",
   -- -- 	config = function() require("zenburn").setup() end,
   -- -- },
-  -- {
-  --   "vague2k/vague.nvim",
-  --   lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-  --   priority = 1000, -- make sure to load this before all the other plugins
-  --   config = function()
-  --     -- NOTE: you do not need to call setup if you don't want to.
-  --     require("vague").setup({
-  --       boolean = "none",
-  --       error = "none",
-  --       headings = "none",
-  --       -- optional configuration here
-  --     })
-  --     -- vim.cmd("colorscheme vague")
-  --   end
-  -- },
+  {
+    "vague2k/vague.nvim",
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other plugins
+    config = function()
+      -- NOTE: you do not need to call setup if you don't want to.
+      -- require("vague").setup({
+      --   boolean = "none",
+      --   error = "none",
+      --   headings = "none",
+      -- optional configuration here
+      -- })
+      -- vim.cmd("colorscheme vague")
+    end
+  },
   {
     'mcchrish/zenbones.nvim',
     -- Optionally install Lush. Allows for more configuration or extending the colorscheme
@@ -338,49 +330,49 @@ return {
   -- -- 		-- vim.cmd 'colorscheme oldworld'
   -- -- 	end,
   -- -- },
-  -- -- {
-  -- -- 	'pappasam/papercolor-theme-slim',
-  -- -- 	config = function()
-  -- -- 		-- vim.cmd 'colorscheme PaperColorSlim'
-  -- -- 	end,
-  -- -- },
-  -- -- {
-  -- -- 	'ramojus/mellifluous.nvim',
-  -- -- 	-- version = "v0.*", -- uncomment for stable config (some features might be missed if/when v1 comes out)
-  -- -- 	config = function()
-  -- -- 		require('mellifluous').setup {
-  -- -- 			colorset = 'kanagawa_dragon',
-  -- -- 		} -- optional, see configuration section.
-  -- -- 		-- vim.cmd 'colorscheme mellifluous'
-  -- -- 	end,
-  -- -- },
-  -- -- { 'kepano/flexoki-neovim', name = 'flexoki' },
-  -- -- {
-  -- -- 	'0xstepit/flow.nvim',
-  -- -- 	lazy = false,
-  -- -- 	priority = 1000,
-  -- -- 	opts = {},
-  -- -- 	config = function()
-  -- -- 		require('flow').setup {
-  -- -- 			dark_theme = true, -- Set the theme with dark background.
-  -- -- 			high_contrast = false, -- Make the dark background darker or the light background lighter.
-  -- -- 			transparent = false, -- Set transparent background.
-  -- -- 			fluo_color = 'pink', -- Color used as fluo. Available values are pink, yellow, orange, or green.
-  -- -- 			mode = 'desaturate', -- Mode of the colors. Available values are: dark, bright, desaturate, or base.
-  -- -- 			aggressive_spell = false, -- Use colors for spell check.
-  -- -- 		}
-  -- -- 		-- vim.cmd 'colorscheme flow'
-  -- -- 	end,
-  -- -- },
-  -- {
-  --   'sho-87/kanagawa-paper.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   opts = {},
-  --   config = function()
-  --     -- vim.cmd 'colorscheme kanagawa-paper'
-  --   end,
-  -- },
+  {
+    'pappasam/papercolor-theme-slim',
+    config = function()
+      -- vim.cmd 'colorscheme PaperColorSlim'
+    end,
+  },
+  {
+    'ramojus/mellifluous.nvim',
+    -- version = "v0.*", -- uncomment for stable config (some features might be missed if/when v1 comes out)
+    config = function()
+      require('mellifluous').setup {
+        colorset = 'kanagawa_dragon',
+      } -- optional, see configuration section.
+      -- vim.cmd 'colorscheme mellifluous'
+    end,
+  },
+  { 'kepano/flexoki-neovim', name = 'flexoki' },
+  {
+    '0xstepit/flow.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function()
+      require('flow').setup {
+        dark_theme = true,        -- Set the theme with dark background.
+        high_contrast = fale,     -- Make the dark background darker or the light background lighter.
+        transparent = false,      -- Set transparent background.
+        fluo_color = 'orange',    -- Color used as fluo. Available values are pink, yellow, orange, or green.
+        mode = 'desaturate',      -- Mode of the colors. Available values are: dark, bright, desaturate, or base.
+        aggressive_spell = false, -- Use colors for spell check.
+      }
+      -- vim.cmd 'colorscheme flow'
+    end,
+  },
+  {
+    'sho-87/kanagawa-paper.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function()
+      -- vim.cmd 'colorscheme kanagawa-paper'
+    end,
+  },
   -- -- {
   -- -- 	"sainnhe/gruvbox-material",
   -- -- 	config = function()

@@ -30,13 +30,13 @@ require('lazy').setup({ { import = 'plugins' } }, {
 		rtp = {
 			-- Stuff I don't use.
 			disabled_plugins = {
-				'gzip',
-				'netrwPlugin',
-				'rplugin',
-				'tarPlugin',
-				'tohtml',
-				'tutor',
-				'zipPlugin',
+				-- 'gzip',
+				-- 'netrwPlugin',
+				-- 'rplugin',
+				-- 'tarPlugin',
+				-- 'tohtml',
+				-- 'tutor',
+				-- 'zipPlugin',
 			},
 		},
 	},

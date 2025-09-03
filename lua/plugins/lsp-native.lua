@@ -1,4 +1,5 @@
 local lsp_configs = {
+  ruff = {},
   buf_ls = {},
   -- golangci_lint_ls = {
   --   golangci_lint_ls = {
@@ -49,18 +50,16 @@ local lsp_configs = {
   },
   -- pyright = {},
   pylsp = {
-    settings = {
-      pylsp = {
-        plugins = {
-          pyflakes = { enabled = false },
-          pycodestyle = { enabled = false },
-          autopep8 = { enabled = false },
-          yapf = { enabled = false },
-          mccabe = { enabled = false },
-          pylsp_mypy = { enabled = false },
-          pylsp_black = { enabled = false },
-          pylsp_isort = { enabled = false },
-        },
+    pylsp = {
+      plugins = {
+        pyflakes = { enabled = false },
+        pycodestyle = { enabled = false },
+        autopep8 = { enabled = false },
+        yapf = { enabled = false },
+        mccabe = { enabled = false },
+        pylsp_mypy = { enabled = false },
+        pylsp_black = { enabled = false },
+        pylsp_isort = { enabled = false },
       },
     },
   },
@@ -188,7 +187,19 @@ return {
   'neovim/nvim-lspconfig',
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
-    'windwp/nvim-autopairs',
+    {
+      'windwp/nvim-autopairs',
+      opts = {
+        fast_wrap = {},
+        -- disable_filetype = { 'TelescopePrompt', 'vim' },
+        check_ts = true,                      -- enable treesitter
+        ts_config = {
+          lua = { 'string' },                 -- don't add pairs in lua string treesitter nodes
+          javascript = { 'template_string' }, -- don't add pairs in javscript template_string treesitter nodes
+          java = false,                       -- don't check treesitter on java
+        },
+      }
+    },
     { 'j-hui/fidget.nvim',    opts = {}, tag = 'legacy' },
     { "mason-org/mason.nvim", opts = {} },
     {
@@ -223,25 +234,46 @@ return {
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
             "w", "x",
             "y", "z" }
-          for _, v in ipairs(vim.lsp.get_clients()[1].server_capabilities.completionProvider.triggerCharacters) do
-            table.insert(chars, v)
+          local cp = vim.lsp.get_clients()[1].server_capabilities.completionProvider
+          if cp then
+            for _, v in ipairs(cp.triggerCharacters or {}) do
+              table.insert(chars, v)
+            end
           end
           client.server_capabilities.completionProvider.triggerCharacters = chars
           vim.lsp.completion.enable(true, client.id, args.buf, {
             autotrigger = true,
           })
           -- Use enter to accept completions.
-          keymap('<CR>', function()
-            if pumvisible() then
-              if vim.snippet.active { direction = 1 } then
-                return '<CR>'
+          local npairs = require('nvim-autopairs')
+          local remap = vim.api.nvim_set_keymap
+          _G.MUtils = {}
+          MUtils.CR = function()
+            if vim.fn.pumvisible() ~= 0 then
+              if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
+                if vim.snippet.active { direction = 1 } then
+                  return npairs.esc('<cr>')
+                else
+                  return npairs.esc('<c-y>')
+                end
               else
-                return '<C-y>'
+                return npairs.esc('<c-e>') .. npairs.autopairs_cr()
               end
             else
-              return '<CR>'
+              return npairs.autopairs_cr()
             end
-          end, { expr = true, remap = false }, { 'i' })
+          end
+          remap('i', '<cr>', 'v:lua.MUtils.CR()', { expr = true, noremap = true })
+          -- keymap('<CR>', function()
+          --   --   if vim.snippet.active { direction = 1 } then
+          --   --     return '<CR>'
+          --   --   else
+          --   --     return '<C-y>'
+          --   --   end
+          --   -- else
+          --   --   return npairs.autopairs_cr(args.buf)
+          --   -- end
+          -- end, { expr = true, remap = false }, { 'i' })
           keymap('<Tab>', function()
             if pumvisible() then
               feedkeys '<C-n>'
