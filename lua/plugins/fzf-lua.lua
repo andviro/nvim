@@ -16,7 +16,10 @@ end
 return {
   'ibhagwan/fzf-lua',
   -- optional for icon support
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
+    -- { 'elanmed/fzf-lua-frecency.nvim', opts = {} },
+  },
   -- or if using mini.icons/mini.nvim
   -- dependencies = { "echasnovski/mini.icons" },
   opts = {
@@ -48,7 +51,8 @@ return {
     {
       '<C-p>',
       function()
-        require('fzf-lua').files { cwd = get_cwd() }
+        require('fzf-lua').global { cwd = get_cwd() }
+        -- require('fzf-lua').combine({ pickers = "oldfiles;files", cwd = get_cwd() })
       end,
       desc = 'O[p]en file [p]icker',
     },
@@ -57,12 +61,13 @@ return {
       function()
         require('fzf-lua').lsp_live_workspace_symbols()
       end,
-      desc = 'O[p]en file [p]icker',
+      desc = '[J]ump to symbol',
     },
     {
       '<C-h>',
       function()
         require('fzf-lua').oldfiles {}
+        -- require('fzf-lua-frecency').frecency {}
       end,
       desc = 'Open [h]istory',
     },

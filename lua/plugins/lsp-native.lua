@@ -6,6 +6,7 @@ local lsp_configs = {
   --     filetypes = { 'go', 'gomod' },
   --   },
   -- },
+  -- protols = {},
   gopls = {
     gopls = {
       gofumpt = true,

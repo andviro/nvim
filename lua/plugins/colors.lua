@@ -1,6 +1,51 @@
 -- vim.cmd [[ colorscheme habamax ]]
 return {
   {
+    {
+      "xiantang/darcula-dark.nvim",
+      config = function()
+        -- setup must be called before loading
+        -- require("darcula").setup({
+        -- override = function(c)
+        -- 	return {
+        -- 		background = "#333333",
+        -- 		dark = "#000000"
+        -- 	}
+        -- end,
+        -- opt = {
+        -- 	integrations = {
+        -- 		telescope = false,
+        -- 		lualine = true,
+        -- 		lsp_semantics_token = true,
+        -- 		nvim_cmp = true,
+        -- 		dap_nvim = true,
+        -- 	},
+        -- },
+        -- })
+        -- vim.cmd('colorscheme darkula')
+      end,
+    },
+  },
+
+  {
+    'projekt0n/caret.nvim',
+    config = function()
+      -- vim.cmd('colorscheme caret')
+    end
+  },
+  {
+    'brenoprata10/nvim-highlight-colors',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {
+    "yorumicolors/yorumi.nvim",
+    config = function()
+      -- vim.cmd 'colorscheme yorumi-abyss'
+    end
+  },
+  {
     "wtfox/jellybeans.nvim",
     lazy = false,
     priority = 1000,
@@ -170,7 +215,7 @@ return {
     dependencies = { 'loganswartz/polychrome.nvim' },
     -- you could do this, or use the standard vimscript `colorscheme sunburn`
     config = function()
-      vim.cmd.colorscheme 'sunburn'
+      -- vim.cmd.colorscheme 'sunburn'
     end,
   },
   {
@@ -271,13 +316,14 @@ return {
   {
     "https://gitlab.com/HiPhish/resolarized.nvim",
     config = function()
-      -- local resolarized  = require 'resolarized'
-      -- local palette      = resolarized.palette.solarized.dark
-      -- local scheme       = resolarized.scheme.solarized
-      -- palette.base03.gui = 0x001e27
-      -- resolarized.apply('solarized-dark', palette, scheme)
-      -- vim.cmd 'colorscheme solarized-dark'
+      local resolarized  = require 'resolarized'
+      local palette      = resolarized.palette.solarized.dark
+      local scheme       = resolarized.scheme.solarized
+      palette.base03.gui = 0x001e27
+      resolarized.apply('solarized-dark', palette, scheme)
+      vim.cmd 'colorscheme solarized-dark'
       -- vim.cmd 'colorscheme selenized-black'
+      -- vim.cmd 'colorscheme selenized-dark'
     end,
   },
   {
@@ -295,12 +341,10 @@ return {
     lazy = false,    -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other plugins
     config = function()
-      -- NOTE: you do not need to call setup if you don't want to.
       -- require("vague").setup({
       --   boolean = "none",
       --   error = "none",
       --   headings = "none",
-      -- optional configuration here
       -- })
       -- vim.cmd("colorscheme vague")
     end
@@ -340,9 +384,7 @@ return {
     'ramojus/mellifluous.nvim',
     -- version = "v0.*", -- uncomment for stable config (some features might be missed if/when v1 comes out)
     config = function()
-      require('mellifluous').setup {
-        colorset = 'kanagawa_dragon',
-      } -- optional, see configuration section.
+      -- require('mellifluous').setup { colorset = 'kanagawa_dragon' } -- optional, see configuration section.
       -- vim.cmd 'colorscheme mellifluous'
     end,
   },

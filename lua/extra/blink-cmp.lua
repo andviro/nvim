@@ -34,16 +34,17 @@ return {
       ['<Down>'] = { 'select_next', 'fallback' },
       ['<C-k>'] = { 'select_prev', 'fallback' },
       ['<C-j>'] = { 'select_next', 'fallback' },
-      ['<C-l>'] = { function(cmp)
-        if cmp.snippet_active({ direction = 1 }) then
-          return cmp.snippet_forward()
-        elseif cmp.is_menu_visible() then
-          return cmp.select_and_accept()
-        end
-      end, 'fallback' },
-      -- ['<C-l>'] = { 'snippet_forward', 'select_and_accept', 'fallback' },
+      --   ['<C-l>'] = { function(cmp)
+      --     if cmp.snippet_active({ direction = 1 }) then
+      --       return cmp.snippet_forward()
+      --     elseif cmp.is_menu_visible() then
+      --       return cmp.select_and_accept()
+      --     end
+      --   end, 'fallback' },
+      ['<C-l>'] = { 'snippet_forward', 'select_and_accept', 'fallback' },
       ['<C-h>'] = { 'snippet_backward', 'fallback' },
       ['<CR>'] = { 'select_and_accept', 'fallback' },
+      ['<C-y>'] = { 'select_and_accept', 'fallback' },
     },
 
     appearance = {
@@ -128,9 +129,9 @@ return {
     cmdline = {
       keymap = {
         preset = 'cmdline',
-        ['<C-k>'] = { 'select_prev', 'fallback' },
-        ['<C-j>'] = { 'select_next', 'fallback' },
-        ['<CR>'] = { 'select_accept_and_enter', 'fallback' },
+        -- ['<C-k>'] = { 'select_prev', 'fallback' },
+        -- ['<C-j>'] = { 'select_next', 'fallback' },
+        -- ['<CR>'] = { 'select_accept_and_enter', 'fallback' },
       },
       completion = {
         ghost_text = { enabled = true },

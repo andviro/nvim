@@ -1,10 +1,12 @@
 local lsp_configs = {
-  buf_ls = {},
+  ruff = {},
+  -- buf_ls = {},
   -- golangci_lint_ls = {
   --   golangci_lint_ls = {
   --     filetypes = { 'go', 'gomod' },
   --   },
   -- },
+  protols = {},
   gopls = {
     gopls = {
       gofumpt = true,
@@ -202,8 +204,8 @@ return {
           nls.builtins.code_actions.impl,
           nls.builtins.formatting.goimports,
           -- nls.builtins.diagnostics.flake8.with({ extra_args = { "--ignore=E501", "--max-line-length", "1024" } }),
-          require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
-          require 'none-ls.formatting.ruff_format',
+          -- require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
+          -- require 'none-ls.formatting.ruff_format',
         })
         return opts
       end,
@@ -211,7 +213,8 @@ return {
   },
   config = function()
     for _, lsp in ipairs(vim.tbl_keys(lsp_configs)) do
-      vim.lsp.config(lsp, { settings = lsp_configs[lsp] })
+      local opts = { settings = lsp_configs[lsp] }
+      vim.lsp.config(lsp, opts)
     end
     vim.lsp.enable(vim.tbl_keys(lsp_configs))
     vim.api.nvim_create_autocmd('LspAttach', {
