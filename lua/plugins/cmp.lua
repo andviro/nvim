@@ -1,0 +1,259 @@
+return {
+  -- Autocompletion
+  'hrsh7th/nvim-cmp',
+  dependencies = {
+    {                    --* the completion engine *--
+      "iguanacucumber/magazine.nvim",
+      name = "nvim-cmp", -- Otherwise highlighting gets messed up
+    },
+    {
+      'L3MON4D3/LuaSnip',
+      version = '2.*',
+      build = (function()
+        -- Build Step is needed for regex support in snippets.
+        -- This step is not supported in many windows environments.
+        -- Remove the below condition to re-enable on windows.
+        if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+          return
+        end
+        return 'make install_jsregexp'
+      end)(),
+      dependencies = {
+        {
+          'rafamadriz/friendly-snippets',
+          config = function()
+            require('luasnip.loaders.from_vscode').lazy_load()
+          end,
+        },
+      },
+      opts = {},
+    },
+    'saadparwaiz1/cmp_luasnip',
+    { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
+    { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },
+    { "iguanacucumber/mag-buffer",   name = "cmp-buffer" },
+    { "iguanacucumber/mag-cmdline",  name = "cmp-cmdline" },
+    "https://codeberg.org/FelipeLema/cmp-async-path",
+    'f3fora/cmp-spell',
+    'hrsh7th/cmp-calc',
+    'lukas-reineke/cmp-rg',
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    -- 'onsails/lspkind.nvim',
+    { "xzbdmw/colorful-menu.nvim", opts = {} },
+  },
+  event = 'InsertEnter *',
+  config = function()
+    -- Setup nvim-cmp.
+    local luasnip = require 'luasnip'
+    local cmp = require 'cmp'
+    -- local lspkind = require 'lspkind'
+    local feedkeys = require 'cmp.utils.feedkeys'
+    local keymap = require 'cmp.utils.keymap'
+    local has_words_before = function()
+      unpack = unpack or table.unpack
+      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+    end
+
+    cmp.setup {
+      formatting = {
+        format = function(entry, vim_item)
+          local highlights_info = require("colorful-menu").cmp_highlights(entry)
+
+          -- highlight_info is nil means we are missing the ts parser, it's
+          -- better to fallback to use default `vim_item.abbr`. What this plugin
+          -- offers is two fields: `vim_item.abbr_hl_group` and `vim_item.abbr`.
+          if highlights_info ~= nil then
+            vim_item.abbr_hl_group = highlights_info.highlights
+            vim_item.abbr = highlights_info.text
+          end
+
+          return vim_item
+        end,
+      },
+      snippet = {
+        expand = function(args)
+          luasnip.lsp_expand(args.body)
+        end,
+      },
+      window = {
+        -- completion = cmp.config.window.bordered(),
+        -- documentation = cmp.config.window.bordered(),
+      },
+      mapping = {
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-u>'] = cmp.mapping.scroll_docs(4),
+        -- ["<C-Space>"] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<CR>'] = cmp.mapping.confirm {
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = true,
+        },
+        ['<C-j>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+        ['<Down>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+        ['<C-k>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+        ['<Up>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+        ['<Tab>'] = cmp.mapping(function(fallback)
+          if luasnip.expand_or_locally_jumpable() then
+            luasnip.expand_or_jump()
+          elseif cmp.visible() then
+            local entry = cmp.get_selected_entry()
+            if not entry then
+              cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+            else
+              cmp.confirm()
+            end
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+        ['<C-l>'] = cmp.mapping(function(fallback)
+          if luasnip.expand_or_locally_jumpable() then
+            luasnip.expand_or_jump()
+          elseif cmp.visible() then
+            local entry = cmp.get_selected_entry()
+            if not entry then
+              cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+            else
+              cmp.confirm()
+            end
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+
+        ['<C-h>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+      },
+      sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        -- { name = 'nvim_lsp_signature_help' },
+        { name = 'luasnip' },
+      }, {
+        { name = 'buffer', keyword_length = 5 },
+        { name = 'path' },
+        -- { name = 'calc' },
+        -- { name = 'spell', keyword_length = 5 },
+        -- { name = 'rg', keyword_length = 5 },
+      }),
+    }
+
+    local cmd_mappings = {
+      ['<C-n>'] = {
+        c = function()
+          feedkeys.call(keymap.t '<Down>', 'n')
+        end,
+      },
+      ['<C-p>'] = {
+        c = function()
+          feedkeys.call(keymap.t '<Up>', 'n')
+        end,
+      },
+      ['<C-e>'] = {
+        c = function()
+          feedkeys.call(keymap.t '<End>', 'n')
+        end,
+      },
+      ['<C-a>'] = {
+        c = function()
+          feedkeys.call(keymap.t '<Home>', 'n')
+        end,
+      },
+      ['<C-b>'] = {
+        c = function()
+          feedkeys.call(keymap.t '<Left>', 'n')
+        end,
+      },
+      ['<C-f>'] = {
+        c = function()
+          feedkeys.call(keymap.t '<Right>', 'n')
+        end,
+      },
+      ['<C-g>'] = {
+        c = cmp.mapping.close(),
+      },
+      ['<C-j>'] = {
+        c = function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            fallback()
+          end
+        end,
+      },
+      ['<C-k>'] = {
+        c = function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            fallback()
+          end
+        end,
+      },
+    }
+
+    -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline('/', {
+      mapping = cmp.mapping.preset.cmdline(cmd_mappings),
+      sources = {
+        { name = 'buffer' },
+      },
+    })
+
+    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline(':', {
+      mapping = cmp.mapping.preset.cmdline(cmd_mappings),
+      sources = cmp.config.sources({
+        { name = 'path' },
+      }, {
+        { name = 'cmdline' },
+      }),
+    })
+    -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+    -- vim.lsp.config('*', { capabilities = capabilities })
+  end,
+}

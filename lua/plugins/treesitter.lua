@@ -3,6 +3,7 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         dependencies = {
+            'nvim-treesitter/nvim-treesitter-textobjects',
             {
                 'nvim-treesitter/nvim-treesitter-context',
                 opts = {
@@ -34,6 +35,7 @@ return {
             },
         },
         version = false,
+        branch = 'main',
         build = ':TSUpdate',
         opts = {
             ensure_installed = {
@@ -94,7 +96,7 @@ return {
                 command = 'TSBufEnable incremental_selection',
             })
 
-            require('nvim-treesitter.configs').setup(opts)
+            require('nvim-treesitter').setup(opts)
         end,
     },
 }
