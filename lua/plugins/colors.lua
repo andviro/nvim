@@ -312,20 +312,39 @@ return {
   --   end
   -- },
   { 'keiyakeiya/PapilioDehaanii.vim', },
+  -- {
+  --   'maxmx03/solarized.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   ---@type solarized.config
+  --   opts = {},
+  --   config = function(_, opts)
+  --     require('solarized').setup(opts)
+  --     vim.cmd.colorscheme 'solarized'
+  --   end,
+  -- },
+  -- {
+  --   "Tsuzat/NeoSolarized.nvim",
+  --   lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+  --   priority = 1000, -- make sure to load this before all the other start plugins
+  --   config = function()
+  --     vim.cmd [[ colorscheme NeoSolarized ]]
+  --   end
+  -- },
   { "savq/melange-nvim" },
-  {
-    "https://gitlab.com/HiPhish/resolarized.nvim",
-    config = function()
-      local resolarized  = require 'resolarized'
-      local palette      = resolarized.palette.solarized.dark
-      local scheme       = resolarized.scheme.solarized
-      palette.base03.gui = 0x001e27
-      resolarized.apply('solarized-dark', palette, scheme)
-      vim.cmd 'colorscheme solarized-dark'
-      -- vim.cmd 'colorscheme selenized-black'
-      -- vim.cmd 'colorscheme selenized-dark'
-    end,
-  },
+  -- {
+  --   "https://gitlab.com/HiPhish/resolarized.nvim",
+  --   config = function()
+  --     local resolarized  = require 'resolarized'
+  --     local palette      = resolarized.palette.solarized.dark
+  --     local scheme       = resolarized.scheme.solarized
+  --     palette.base03.gui = 0x001e27
+  --     resolarized.apply('solarized-dark', palette, scheme)
+  --     vim.cmd 'colorscheme solarized-dark'
+  --     -- vim.cmd 'colorscheme selenized-black'
+  --     -- vim.cmd 'colorscheme selenized-dark'
+  --   end,
+  -- },
   {
     'EdenEast/nightfox.nvim',
     config = function()
@@ -427,28 +446,43 @@ return {
   -- -- 		-- vim.cmd 'colorscheme selenized'
   -- -- 	end,
   -- -- },
-  -- -- {
-  -- -- 	'craftzdog/solarized-osaka.nvim',
-  -- -- 	lazy = false,
-  -- -- 	priority = 1000,
-  -- -- 	config = function()
-  -- -- 		require('solarized-osaka').setup {
-  -- -- 			style = 'storm',
-  -- -- 			transparent = false,
-  -- -- 			styles = {
-  -- -- 				floats = 'transparent',
-  -- -- 				sidebars = 'transparent',
-  -- -- 			},
-  -- -- 			on_colors = function(colors)
-  -- -- 				colors.bg = '#001a1d'
-  -- -- 			end,
-  -- -- 		}
-  -- -- 		-- vim.cmd 'colorscheme solarized-osaka'
-  -- -- 		-- vim.cmd 'hi link LspInlayHint LineNr'
-  -- -- 		-- vim.cmd 'hi WinBar ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE cterm=bold gui=bold'
-  -- -- 		-- vim.cmd 'hi WinBarNC ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE cterm=bold gui=bold'
-  -- -- 	end,
-  -- -- },
+  {
+    'craftzdog/solarized-osaka.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('solarized-osaka').setup {
+        style = 'storm',
+        transparent = false,
+        styles = {
+          floats = 'transparent',
+          sidebars = 'transparent',
+        },
+        on_colors = function(colors)
+          colors.bg = '#001a1d'
+        end,
+      }
+      -- vim.cmd 'colorscheme solarized-osaka'
+      -- vim.cmd 'hi link LspInlayHint LineNr'
+      -- vim.cmd 'hi WinBar ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE cterm=bold gui=bold'
+      -- vim.cmd 'hi WinBarNC ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE cterm=bold gui=bold'
+    end,
+  },
+  {
+    "svrana/neosolarized.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("neosolarized").setup({
+        comment_italics = true,
+        background_set = false,
+      })
+      vim.cmd.colorscheme("neosolarized")
+    end,
+    dependencies = {
+      "tjdevries/colorbuddy.nvim",
+    },
+  },
   -- --
   -- -- {
   -- -- 	"https://github.com/lifepillar/vim-solarized8",
